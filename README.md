@@ -1,37 +1,73 @@
-# Amigo
+# React + TypeScript + Vite
 
-Amigo is a mobile-first language learning app designed to help preserve endangered and underrepresented languages through fun, interactive lessons.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- Mobile-first learning experience
-- Basic Mindanao Languages beginner lessons
-- Audio-based pronunciation practice
-- XP and streak system
-- Lesson progress tracking
-- Kid-friendly interface
-- Offline-ready prototype
-- Simple leaderboard concept
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Future Features
+## React Compiler
 
-- Support for more indigenous languages
-- User accounts and cloud progress sync
-- Community-verified lesson content
-- AI-assisted lesson generation
-- Speech/pronunciation feedback
-- Badges, achievements, and friendly leaderboards
-- Teacher or parent dashboard
-- AWS integration with Amplify, Cognito, DynamoDB, and S3
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Project Status
+## Expanding the ESLint configuration
 
-This project is currently a hackathon prototype.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## License
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-Copyright (c) 2026 Amigo Team. All rights reserved.
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-This source code is publicly visible for demonstration and project review purposes only. No permission is granted to copy, modify, redistribute, sublicense, or use this code commercially without written permission from the Amigo Team.
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-Language content, audio recordings, designs, datasets, and third-party assets may have separate ownership or license restrictions.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
