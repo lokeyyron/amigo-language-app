@@ -1513,7 +1513,7 @@ function AddFriendDialog({
 function AlertsDialog({ onClose }: { onClose: () => void }) {
   const alerts = [
     'Keith Siao just added you as a friend.',
-    'Mika kept a 13-day streak today.',
+    'Andrew kept a 13-day streak today.',
     'Bisaya pronunciation practice is ready.',
   ]
 
