@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# Amigo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Amigo is a gamified language learning prototype for learning and preserving indigenous and endangered languages in Mindanao. The current demo focuses on Bisaya/Cebuano lessons with streaks, XP, profile progress, leaderboards, phrase audio, and speaking practice.
 
-Currently, two official plugins are available:
+## Prototype Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Mobile-first language learning UI
+- Bisaya lesson path with XP and streak tracking
+- Translator demo for common English to Bisaya phrases
+- MP3 playback for lesson and translator phrases
+- Speaking practice using browser speech recognition
+- Editable profile, friends, badges, progress, alerts, and settings
+- AWS-ready local sync adapter for future Cognito/DynamoDB integration
 
-## React Compiler
+## Run Locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then open the local URL shown by Vite.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Build
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+## Asset Locations
+
+Upload exported assets into `public/assets`.
+
+Important files:
+
+```txt
+public/assets/ui/play-button.png
+public/assets/icons/fire-inactive.png
+public/assets/icons/league-timawa.png
+public/audio/bisaya/maayong-buntag.mp3
+public/audio/bisaya/kumusta-ka.mp3
+public/audio/bisaya/taga-asa-ka.mp3
+```
+
+More asset placement notes are in `public/assets/README.md`.
+
+## AWS Prototype Plan
+
+This app is currently safe for local/demo use. It includes an AWS-ready adapter in `src/services/amigoCloud.ts` so the storage layer can later be connected to AWS Amplify, Cognito, DynamoDB, and S3 without rewriting the UI.
+
+See [docs/AWS_PROTOTYPE.md](docs/AWS_PROTOTYPE.md).
+
+## Deploy on AWS Free Tier
+
+Step-by-step guide: [docs/AWS_FREE_TIER_DEPLOY.md](docs/AWS_FREE_TIER_DEPLOY.md)
+
+Quick path:
+
+1. Connect the GitHub repo to **AWS Amplify Hosting** (uses `amplify.yml`)
+2. Deploy backend with **SAM** from `infra/template.yaml` (Cognito + DynamoDB + Lambda)
+3. Add `VITE_*` env vars in Amplify and redeploy
+
+## Notes
+
+The current translator is a local dictionary for a reliable demo. Real translation and speech scoring can be connected later through a backend model or AWS service, but that may require paid compute.
